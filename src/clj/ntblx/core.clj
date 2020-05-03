@@ -6,7 +6,8 @@
     [ntblx.config :refer [env]]
     [clojure.tools.cli :refer [parse-opts]]
     [clojure.tools.logging :as log]
-    [mount.core :as mount])
+    [mount.core :as mount]
+    [ntblx.db.core :as db-controller])
   (:gen-class))
 
 ;; log uncaught exceptions in threads

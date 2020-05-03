@@ -16,6 +16,11 @@ To start a web server for the application, run:
 
     lein run 
 
+## TODO
+
+ Administration page
+ Main table
+
 ## License
 
-Copyright © 2020 FIXME
+Copyright © 2020

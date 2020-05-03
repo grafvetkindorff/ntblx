@@ -4,6 +4,7 @@
     [ntblx.layout :refer [error-page]]
     [ntblx.routes.home :refer [home-routes]]
     [ntblx.routes.services :refer [service-routes]]
+    [ntblx.routes.auth :refer [auth-routes]]
     [reitit.swagger-ui :as swagger-ui]
     [reitit.ring :as ring]
     [ring.middleware.content-type :refer [wrap-content-type]]
@@ -20,7 +21,8 @@
   (ring/ring-handler
     (ring/router
       [(home-routes)
-       (service-routes)])
+       (service-routes)
+       (auth-routes)])
     (ring/routes
       (swagger-ui/create-swagger-ui-handler
         {:path   "/swagger-ui"
