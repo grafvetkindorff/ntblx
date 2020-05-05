@@ -1,10 +1,11 @@
 (ns ntblx.db.core
-    (:require
-      [monger.core :as mg]
-      [monger.collection :as mc]
-      [monger.operators :refer :all]
-      [mount.core :refer [defstate]]
-      [ntblx.config :refer [env]]))
+  (:require
+    [monger.core :as mg]
+    [monger.collection :as mc]
+    [monger.operators :refer :all]
+    [mount.core :refer [defstate]]
+    [ntblx.config :refer [env]])
+  (:import org.bson.types.ObjectId))
 
 (defstate db*
   :start (-> env :database-url mg/connect-via-uri)
@@ -14,13 +15,7 @@
   :start (:db db*))
 
 (defn create-user [user]
-  (mc/insert db "users" user))
+  (mc/insert db "users" (merge user {:_id (org.bson.types.ObjectId)})))
 
-(defn update-user [id first-name last-name email]
-  (mc/update db "users" {:_id id}
-             {$set {:first_name first-name
-                    :last_name last-name
-                    :email email}}))
-
-(defn get-user [id]
-  (mc/find-one-as-map db "users" {:_id id}))
+(defn get-user [user]
+  (mc/find-one-as-map db "users" user))
