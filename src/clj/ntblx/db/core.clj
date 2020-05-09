@@ -15,7 +15,13 @@
   :start (:db db*))
 
 (defn create-user [user]
-  (mc/insert db "users" (merge user {:_id (org.bson.types.ObjectId)})))
+  (mc/insert db "users" (merge user {:_id (org.bson.types.ObjectId.)})))
 
 (defn get-user [user]
   (mc/find-one-as-map db "users" user))
+
+(defn create-source [source]
+  (mc/insert db "sources" (merge source {:_id (org.bson.types.ObjectId.)})))
+
+(defn get-source [source]
+  (mc/find-one-as-map db "sources" source))

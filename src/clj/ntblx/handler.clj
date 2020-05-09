@@ -2,9 +2,10 @@
   (:require
     [ntblx.middleware :as middleware]
     [ntblx.layout :refer [error-page]]
+    [ntblx.routes.auth :refer [auth-routes]]
     [ntblx.routes.home :refer [home-routes]]
     [ntblx.routes.services :refer [service-routes]]
-    [ntblx.routes.auth :refer [auth-routes]]
+    [ntblx.routes.source :refer [source-routes]]
     [ntblx.routes.user :refer [user-routes]]
     [reitit.swagger-ui :as swagger-ui]
     [reitit.ring :as ring]
@@ -21,10 +22,11 @@
   :start
   (ring/ring-handler
     (ring/router
-      [(home-routes)
+      [(auth-routes)
+       (home-routes)
        (service-routes)
-       (auth-routes)
-       (user-routes)])
+       (user-routes)
+       (source-routes)])
     (ring/routes
       (swagger-ui/create-swagger-ui-handler
         {:path   "/swagger-ui"

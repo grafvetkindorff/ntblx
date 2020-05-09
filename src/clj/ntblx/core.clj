@@ -1,13 +1,12 @@
 (ns ntblx.core
   (:require
-    [ntblx.handler :as handler]
-    [ntblx.nrepl :as nrepl]
-    [luminus.http-server :as http]
-    [ntblx.config :refer [env]]
-    [clojure.tools.cli :refer [parse-opts]]
-    [clojure.tools.logging :as log]
-    [mount.core :as mount]
-    [ntblx.db.core :as db-controller])
+   [ntblx.handler :as handler]
+   [ntblx.nrepl :as nrepl]
+   [luminus.http-server :as http]
+   [ntblx.config :refer [env]]
+   [clojure.tools.cli :refer [parse-opts]]
+   [clojure.tools.logging :as log]
+   [mount.core :as mount])
   (:gen-class))
 
 ;; log uncaught exceptions in threads
