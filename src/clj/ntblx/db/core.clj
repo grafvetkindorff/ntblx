@@ -1,10 +1,10 @@
 (ns ntblx.db.core
   (:require
-    [monger.core :as mg]
-    [monger.collection :as mc]
-    [monger.operators :refer :all]
-    [mount.core :refer [defstate]]
-    [ntblx.config :refer [env]])
+   [monger.core :as mg]
+   [monger.collection :as mc]
+   [monger.operators :refer :all]
+   [mount.core :refer [defstate]]
+   [ntblx.config :refer [env]])
   (:import org.bson.types.ObjectId))
 
 (defstate db*
@@ -19,6 +19,9 @@
 
 (defn get-user [user]
   (mc/find-one-as-map db "users" user))
+
+(defn get-users []
+  (mc/find-maps db "users"))
 
 (defn create-source [source]
   (mc/insert db "sources" (merge source {:_id (org.bson.types.ObjectId.)})))
