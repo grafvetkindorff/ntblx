@@ -1,15 +1,15 @@
 (ns ntblx.routes.user
   (:require
    [ntblx.middleware :as middleware]
-   [ntblx.db.core :refer [create-user get-user get-users]]
+   [ntblx.db.core :refer [insert-entry get-entry get-all]]
    [cheshire.core :refer [generate-string]]
    [ring.util.http-response :as response]))
 
 (defn what-return [request]
   (let [params (:query-params request)]
     (if (empty? params)
-      (map #(dissoc % :_id) (get-users))
-      (dissoc (get-user params) :_id))))
+      (map #(dissoc % :_id) (get-all "users"))
+      (dissoc (get-entry "users" params) :_id))))
 
 (defn user-routes []
   [""
@@ -30,5 +30,5 @@
 
             :handler
             (fn [request]
-              (do (create-user (:query-params request))
+              (do (insert-entry (:query-params request) "users")
                   {:status 200 :body (str (:query-params request))}))}}]])

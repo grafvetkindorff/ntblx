@@ -14,17 +14,10 @@
 (defstate db
   :start (:db db*))
 
-(defn create-user [user]
-  (mc/insert db "users" (merge user {:_id (org.bson.types.ObjectId.)})))
+(defn insert-entry [entry collection]
+  (mc/insert db collection (merge entry {:_id (org.bson.types.ObjectId.)})))
 
-(defn get-user [user]
-  (mc/find-one-as-map db "users" user))
+(defn get-entry [entry collection]
+  (mc/find-one-as-map db collection entry))
 
-(defn get-users []
-  (mc/find-maps db "users"))
-
-(defn create-source [source]
-  (mc/insert db "sources" (merge source {:_id (org.bson.types.ObjectId.)})))
-
-(defn get-source [source]
-  (mc/find-one-as-map db "sources" source))
+(defn get-all [collection] (mc/find-maps db collection))
