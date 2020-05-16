@@ -26,6 +26,7 @@
                  [metosin/muuntaja "0.6.6"]
                  [metosin/reitit "0.4.2"]
                  [metosin/ring-http-response "0.9.1"]
+                 [metosin/jsonista "0.2.6"]
                  [mount "0.1.16"]
                  [nrepl "0.7.0"]
                  [org.clojure/clojure "1.10.1"]

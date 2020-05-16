@@ -21,3 +21,8 @@
   (mc/find-one-as-map db collection entry))
 
 (defn get-all [collection] (mc/find-maps db collection))
+
+(defn what-return [keys where]
+  (if (empty? keys)
+    (map #(dissoc % :_id) (get-all where))
+    (dissoc (get-entry where keys) :_id)))
