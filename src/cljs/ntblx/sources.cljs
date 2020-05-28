@@ -14,37 +14,59 @@
    [clojure.string :as string])
   (:import goog.History))
 
-'(defn source-item []
-   (let [editing (r/atom false)]
-     (fn [{:keys [id done title]}]
-       [:li {:class (str (if done "completed ")
-                         (if @editing "editing"))}
-        [:div.view
-         [:input.toggle {:type "checkbox" :checked done
-                         :on-change #(toggle id)}]
-         [:label {:on-double-click #(reset! editing true)} title]
-         [:button.destroy {:on-click #(delete id)}]]
-        (when @editing
-          [todo-edit {:class "edit" :title title
-                      :on-save #(save id %)
-                      :on-stop #(reset! editing false)}])])))
+(defn source-item-person-cell [source]
+  (let [selected     (r/atom false)
+        name         (get source "name" "")
+        position     (get source "position" "")
+        email        (get source "email" "")
+        tel          (get source "phone" "")
+        social_media (get source "social_media" "")]
+    (fn []
+      [:div {:class "tile is-child box"
+             :style {:background-color (if @selected "#A07178" "#E6CCBE")}
+             :on-click #(swap! selected not)
+             :on-double-click #(println "Box Clicked!")}
+       [:p {:class "title"} [:strong name]]
+       [:p {:class "subtitle"} [:em position]]
+       [:p [:small "email: " email]]
+       [:p [:small "tel: " tel]]
+       [:p [:small "social media: " social_media]]])))
 
-(defn source-item []
+(defn source-item-media-cell [source]
+  (let [selected     (r/atom false)
+        media        (get source "media" "")
+        type         (get source "type" "")
+        page         (get source "site" "")]
+    (fn []
+      [:div {:class "tile is-child is-3 box"
+             :style {:background-color (if @selected "#A07178" "#C8CC92")}
+             :on-click #(swap! selected not)
+             :on-double-click #(println "Box Clicked!")}
+       [:p {:class "title"} media]
+       [:p {:class "subtitle"} type]
+       [:p {:class "subtitle"} page]])))
+
+(defn source-item-notes-cell [source]
+  (let [selected     (r/atom false)
+        notes        (get source "notes" "")]
+    (fn []
+      [:div {:class "tile is-child box"
+             :style {:background-color (if @selected "#A07178" "#E6CCBE")}
+             :on-click #(swap! selected not)
+             :on-double-click #(println "Box Clicked!")}
+       [:content notes]])))
+
+(defn source-item-row []
   (let [editing (r/atom false)]
     (fn [source]
-      (let [name (get source "name" "")
-            email (get source "email" "")
-            tel (get source "phone" "")
-            notes (get source "notes" "")]
-        [:tr
-         [:td [:div {:class "box"} [:content [:p [:strong name]] [:p [:small "email: " email " tel: " tel]]]]]
-         [:td [:div {:class "box"} notes]]])
-      )))
+      [:div {:class "tile is-parent" :style {:padding "10px"}}
+       [source-item-media-cell source]  [:div {:style {:padding "20px"}}]
+       [source-item-person-cell source] [:div {:style {:padding "5px"}}]
+       [source-item-notes-cell source]
+       ])))
 
 (defn sources-table [sources]
   [:section#table
-   [:table {:class "table"}
-    [:thead [:tr [:th "Info"] [:th "Notes"]]]
-    [:tbody
-     (for [source (filter not-empty (get sources "entries" {}))]
-       [source-item source])]]])
+   [:div {:class "tile is-ancestor"}]
+    (for [source (filter not-empty (get sources "entries" {}))]
+      [source-item-row source])])

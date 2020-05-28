@@ -9,8 +9,9 @@ curl \
 --data '{"firstname":"test", "lastname":"testlast", "email":"test@test.com", "phone":"79845678901"}' \
 'localhost:3000/user'
 
-curl \ 
+curl \
+-vvv \
 --header "Content-Type: application/json" \
 --request POST \
---data '{"media": "testmedia", "site": "someurl", "type"="sometype", "department": "somedept", "position": "pos", "name": "somename", "phone": "12345678", "email": "test@mail.ru", "social_media": "facebook", "notes": "hmm"}' \
+--data '{"media": "testmedia", "site": "someurl", "type": "sometype", "department": "somedept", "position": "pos", "name": "somename", "phone": "12345678", "email": "test@mail.ru", "social_media": "facebook", "notes": "hmm"}' \
 'localhost:3000/source'
