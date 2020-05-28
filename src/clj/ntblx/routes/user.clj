@@ -19,5 +19,6 @@
      :post
      {:handler
       (fn [request]
-        (do (insert-entry (:body-params request) "users")
+        (do (let [params (:body-params request)]
+              (empty? params) (println "Empty params") (insert-entry  "users"))
             (-> (response/ok))))}}]])

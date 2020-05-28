@@ -13,10 +13,15 @@
      {:handler
       (fn [request]
         (let [entries (what-return (:query-params request) "sources")]
-          {:status 200 :body (write-value-as-string {:entries entries})}))}
+          (-> (response/ok (write-value-as-string {:entries entries}))
+              (response/header "Content-Type" "application/json"))))}
 
      :post
      {:handler
       (fn [request]
-        (do (insert-entry (:body-params request) "sources")
-            {:status 200 :body (str (:body-params request))}))}}]])
+        (do
+          (let [params (:body-params request)]
+            (if (empty? params)
+              (println "Empty params")
+              (insert-entry params "sources")))
+          (-> (response/ok))))}}]])

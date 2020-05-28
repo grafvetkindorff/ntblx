@@ -5,8 +5,9 @@
     [reitit.frontend.easy :as rfe]
     [reitit.frontend.controllers :as rfc]))
 
-;;dispatchers
+;; -- Dispatchers ---------------------------------------------------------------------------------
 
+;; -- Navigation
 (rf/reg-event-db
   :common/navigate
   (fn [db [_ match]]
@@ -25,6 +26,7 @@
   (fn [_ [_ url-key params query]]
     {:common/navigate-fx! [url-key params query]}))
 
+;; -- Docs
 (rf/reg-event-db
   :set-docs
   (fn [db [_ docs]]
@@ -38,17 +40,38 @@
                   :response-format (ajax/raw-response-format)
                   :on-success       [:set-docs]}}))
 
+;; -- Sources
+(rf/reg-event-db
+  :set-sources
+  (fn [db [_ sources]]
+    (assoc db :sources sources)))
+
+(rf/reg-event-fx
+ :fetch-sources
+ (fn [_ _]
+   {:http-xhrio {:method          :get
+                 :uri             "/source"
+                 :response-format (ajax/json-response-format)
+                 :on-success       [:set-sources]}}))
+
+;; -- Errros
 (rf/reg-event-db
   :common/set-error
   (fn [db [_ error]]
     (assoc db :common/error error)))
 
+;; -- Pages initializing
 (rf/reg-event-fx
   :page/init-home
   (fn [_ _]
     {:dispatch [:fetch-docs]}))
 
-;;subscriptions
+(rf/reg-event-fx
+  :page/init-table
+  (fn [_ _]
+    {:dispatch [:fetch-sources]}))
+
+;; -- Subscriptions -------------------------------------------------------------------------------
 
 (rf/reg-sub
   :common/route
@@ -71,6 +94,11 @@
   :docs
   (fn [db _]
     (:docs db)))
+
+(rf/reg-sub
+  :sources
+  (fn [db _]
+    (:sources db)))
 
 (rf/reg-sub
   :common/error

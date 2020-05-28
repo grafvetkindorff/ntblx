@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ntblx</title>
+</head>
+
+<body>
+
+  <!-- <div id="app"> -->
+  <!-- </div>         -->
+
+  <section>
+    <div class="columns">
+      <div class="column">
+        <div class="box">
+          <div>Some text</div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box">
+          <div>Some text1</div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box">
+          <div>Some text2</div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="box">
+          <div>Some text3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer has-text-centered">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-8-desktop is-offset-2-desktop">
+          <p>
+            <strong class="has-text-weight-semibold">
+              Simple table
+            </strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- scripts and styles -->
+  {% style "/assets/bulma/css/bulma.min.css" %}
+  {% style "/assets/material-icons/css/material-icons.min.css" %}
+  {% style "/css/screen.css" %}
+
+  <script type="text/javascript">
+    var csrfToken = "{{csrf-token}}";
+  </script>
+
+  {% script "/js/app.js" %}
+</body>
+
+</html>
